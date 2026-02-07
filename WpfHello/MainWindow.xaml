@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfHello"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="350" Width="500" MinHeight="350" MinWidth="300" Closing="Window_Closing">
     <Grid>
-
+        <Menu HorizontalAlignment="Left" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header ="Exit" Click="MenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <Label x:Name="lbl" Content="Пуск" HorizontalAlignment="Center" VerticalAlignment="Top">
+        </Label>
+        <Button x:Name="setBut" Content="Set Name" HorizontalAlignment="Left" Margin="67
+                ,88,0,0" VerticalAlignment="Top" Click="setBut_Click"/>
+        <Button x:Name="retBut" Content="Ret Name" HorizontalAlignment="Left" Margin="67,154,0,0" VerticalAlignment="Top" Click="retBut_Click"/>
+        <TextBox x:Name="setText" HorizontalAlignment="Left" Margin="343,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="setText_TextChanged"/>
+        <Label x:Name="retLabel" Content="Label" HorizontalAlignment="Left" Margin="240
+               ,154,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="New_win" Content="New Win" HorizontalAlignment="Left" Margin="250,258,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" Margin="354,245,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="50" Width="75"/>
     </Grid>
 </Window>
