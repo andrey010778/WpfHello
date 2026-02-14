@@ -17,11 +17,25 @@ namespace WpfHello
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        string nameFile = ("C://Users//Андрей//source//repos//WpfHello//WpfHello//username.txt");
         bool isDataDirty = false;
+
+       
+
+
         public MyWindow myWin { get; set; } 
 
         public MainWindow()
         {
+
+            CommandBinding abinding = new CommandBinding();
+            abinding.Command = CustomCommands.Launch;
+            abinding.Executed += new ExecutedRoutedEventHandler(Launch_Handler);
+
+            abinding.CanExecute += new CanExecuteRoutedEventHandler(LaunchEnabled_Handler);
+            this.CommandBindings.Add(abinding);
+
             InitializeComponent();
             lbl.Content = "Добрый день!";
             setBut.IsEnabled = false;
@@ -32,49 +46,50 @@ namespace WpfHello
 
         }
 
-        private void setBut_Click(object sender, RoutedEventArgs e)
+        private void SetBut()
         {
-            System.IO.StreamWriter sw = null;
-            try
-            {
-                sw = new System.IO.StreamWriter("C:\\Users\\Андрей\\source\\repos\\WpfHello\\WpfHello\\wpfhello.txt");
-                sw.WriteLine(setText.Text);
-            }
-            catch (Exception ex) 
-                {
-                    MessageBox.Show(ex.Message);
-
-                }
-            finally
-            {
-                if (sw != null) 
-                    sw.Close();
-                retBut.IsEnabled = true;
-                isDataDirty = false;
-            }
-           
-
+            System.IO.StreamWriter se = new System.IO.StreamWriter(nameFile);
+            se.WriteLine(setText.Text);
+            se.Close();
+            retBut.IsEnabled = true;
+            isDataDirty = false;
         }
 
-        private void retBut_Click(object sender, RoutedEventArgs e)
+        private void RetBut()
         {
-            System.IO.StreamReader sr = null;
+            System.IO.StreamReader sr = new System.IO.StreamReader(nameFile);
+            setText.Text = sr.ReadToEnd();
+            sr.Close();
+            setBut.IsEnabled = true;
+            isDataDirty = false;
+        
+        }
+
+       
+
+        private void Grid_Click(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement feSource = e.Source as FrameworkElement;   
             try
             {
-                using (sr = new System.IO.StreamReader("C:\\Users\\Андрей\\source\\repos\\WpfHello\\WpfHello\\wpfhello.txt"))
-                    retLabel.Content = "Приветствую Вас, уважаемый  " + sr.ReadToEnd();
+                switch (feSource.Name)
+                {
+                    case "setBut":
+                        SetBut();
+                        break;
+                    case "retBut":
+                        RetBut();
+                        break;
+                }
+                e.Handled = true;
+
             }
-            catch (Exception ex)
+            catch (Exception ex)  
             {
                 MessageBox.Show(ex.Message);
             }
-            finally
-            {
-                if (sr != null)
-                    sr.Close();
-            }
-            
         }
+
 
         private void setText_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -101,7 +116,18 @@ namespace WpfHello
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+    
+        private void LaunchEnabled_Handler(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = (bool)check.IsChecked;
+        }
+        
+        private void Launch_Handler(object sender, RoutedEventArgs e)
         {
             if (myWin == null)
                 myWin = new MyWindow();
@@ -110,10 +136,7 @@ namespace WpfHello
             myWin.Left = location.X + New_win.Width;
             myWin.Top = location.Y;
             myWin.Show();
-
-           
         }
-
-        
+    
     }
     }
