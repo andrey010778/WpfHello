@@ -5,7 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfHello"
         mc:Ignorable="d"
-        Title="MyWindow" Height="450" Width="800">
+        Title="MyWindow" Height="450" Width="800" Background="{StaticResource gradientStyle}">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="MinHeight" Value="70"/>
+            <Setter Property="MinWidth" Value="70"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Template">
+                
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="Blue"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Name="Storyboard">
+                                        <Storyboard Duration="0:0:1">
+                                            <DoubleAnimation Storyboard.TargetProperty="FontSize" To="20"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="Width" To="100"/>
+                                            <DecimalAnimation Storyboard.TargetProperty="Height" To="100"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="Storyboard"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                     
+                    </ControlTemplate>
+                </Setter.Value>
+                       
+            </Setter>
+            <Style.Triggers>
+                
+                <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Duration="0:0:1">
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" To="20"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="100"/>
+                                <DecimalAnimation Storyboard.TargetProperty="Height" To="100"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard Duration="0:0:1">
+                                    <DoubleAnimation Storyboard.TargetProperty="FontSize"/>
+                                    <DoubleAnimation Storyboard.TargetProperty="Width"/>
+                                    <DecimalAnimation Storyboard.TargetProperty="Height"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+
+
+
+                    </EventTrigger>
+                              
+                
+            </Style.Triggers>
+            
+        </Style>
+        
+        
+    </Window.Resources>
     <Grid>
         <Button Content="Button" HorizontalAlignment="Left" Margin="117,130,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="280,100,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="80" Width="120"/>
